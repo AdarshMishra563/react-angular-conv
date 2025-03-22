@@ -4,11 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { login } from './slice.js';
 import { FaArrowUp } from 'react-icons/fa';
 import axios from 'axios';
+import { ActivityIcon } from 'lucide-react';
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const[loading,setLoading]=useState(false);
 
   const handleLogin = async () => {
  try{
@@ -18,7 +20,7 @@ export default function Login() {
   if(data.data.status==='admin'){
     navigate('/admin');
   dispatch(login({ email, password }));
-  }else{navigate('/user'); dispatch(login({ email, password }));}
+  }else if(data.data.status==='user'){navigate('/user'); dispatch(login({ email, password }));}
 
  }catch(err){console.log(err)}
   
@@ -92,7 +94,7 @@ export default function Login() {
             fontSize: '16px'
           }}
         >
-          Login
+        Login  {loading && <ActivityIcon size={16} style={{marginLeft:'8px'}}/> }
         </button>
         <p style={{
           marginTop: '16px',
