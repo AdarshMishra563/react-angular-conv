@@ -1,5 +1,5 @@
 import React, { useState,useEffect,useRef } from 'react';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Routes, Route, BrowserRouter, Navigate,Outlet } from 'react-router-dom';
 import Home from './Home';
 import Login from './login';
 import Protected from './Protected';
@@ -11,6 +11,7 @@ import { LogOut,User } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import SignUp from './signup';
 import Services from './Services';
+import Userpage from './userpage';
 
 
 
@@ -62,12 +63,8 @@ function Layout() {
         </div>
       )}
     </div></div>
-        <Routes>
-        
-          <Route path="/*" element={<Home/>} />
-          <Route path="/dashboard" element={<Home />} />
-          <Route path="/service" element={<Services/>} />
-        </Routes>
+    
+        <Outlet/>
       </div>
     </div>
   );
@@ -80,10 +77,20 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp/>} />
         <Route
-          path="/*"
+          path="/admin"
           element={
             <Protected>
               <Layout />
+            </Protected>
+          }
+        ><Route path="dashboard" element={<Home />} />
+        <Route path="*" element={<Home/>} />
+          <Route path="service" element={<Services />} /></Route>
+        <Route
+          path="/user"
+          element={
+            <Protected>
+              <Userpage/>
             </Protected>
           }
         />

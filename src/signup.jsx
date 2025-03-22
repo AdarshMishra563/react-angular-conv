@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { FaArrowUp } from 'react-icons/fa';
 import { login } from './slice';
@@ -8,18 +9,17 @@ import { login } from './slice';
 export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [username, setConfirmPassword] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSignUp = () => {
-    if (email.trim() && password.trim() && password === confirmPassword) {
-      
-      navigate('/login');
-    } else {
-      alert('Passwords do not match or fields are empty.');
-    }
-  };
+  const handleSignUp = async () => {
+    try{
+      const name=username;
+const data= await  axios.post('http://localhost:3000/api/register', {email,password,name});
+   console.log(data);
+   navigate('/login');
+  }catch(err){console.log(err)}}
 
   return (
     <div style={{
@@ -76,9 +76,9 @@ export default function SignUp() {
           }}
         />
         <input
-          type="password"
-          placeholder="Confirm your password"
-          value={confirmPassword}
+          type="text"
+          placeholder="username"
+          value={username}
           onChange={(e) => setConfirmPassword(e.target.value)}
           style={{
             width: '100%',
@@ -107,7 +107,7 @@ export default function SignUp() {
           marginTop: '16px',
           textAlign: 'center'
         }}>
-          Already have an account? <a href="/login" style={{ color: '#3b82f6', textDecoration: 'none' }}>Login</a>
+          Already have an account? <Link to="/login" style={{ color: '#3b82f6', textDecoration: 'none' }}>Login</Link>
         </p>
       </div>
     </div>

@@ -7,7 +7,7 @@ const NavigationItems = [
   {
     title: 'Dashboard',
     type: 'item',
-    url: '/dashboard',
+    url: 'dashboard',
     icon: <FaHome />
   },
   {
@@ -16,8 +16,8 @@ const NavigationItems = [
     type: 'collapse',
     icon: <FaBox />,
     children: [
-      { id: 'service-list', title: 'Service List', url: '/service' },
-      { id: 'sub_service-list', title: 'Sub Service List', url: '/sub-service' }
+      { id: 'service-list', title: 'Service List', url: 'service' },
+      { id: 'sub_service-list', title: 'Sub Service List', url: 'sub-service' }
     ]
   },
   {
@@ -26,8 +26,8 @@ const NavigationItems = [
     type: 'collapse',
     icon: <FaUsers />,
     children: [
-      { id: 'active_users', title: 'Active Users', url: '/users' },
-      { id: 'blocked_users', title: 'Blocked Users', url: '/users' }
+      { id: 'active_users', title: 'Active Users', url: 'users' },
+      { id: 'blocked_users', title: 'Blocked Users', url: 'users' }
     ]
   },
   {
@@ -36,9 +36,9 @@ const NavigationItems = [
     type: 'collapse',
     icon: <FaUser />,
     children: [
-      { id: 'active_contractor', title: 'Active Contractor', url: '/contractor' },
-      { id: 'approved_contractor', title: 'Approved Contractor', url: '/contractor' },
-      { id: 'rejected_contractor', title: 'Rejected Contractor', url: '/contractor' }
+      { id: 'active_contractor', title: 'Active Contractor', url: 'contractor' },
+      { id: 'approved_contractor', title: 'Approved Contractor', url: 'contractor' },
+      { id: 'rejected_contractor', title: 'Rejected Contractor', url: 'contractor' }
     ]
   },
   {
@@ -47,8 +47,8 @@ const NavigationItems = [
     type: 'collapse',
     icon: <FaUser />,
     children: [
-      { id: 'active_order', title: 'Active Order', url: '/contractor' },
-      { id: 'approved_order', title: 'Completed Order', url: '/contractor' },
+      { id: 'active_order', title: 'Active Order', url: 'contractor' },
+      { id: 'approved_order', title: 'Completed Order', url: 'contractor' },
     ]
   }
 ];

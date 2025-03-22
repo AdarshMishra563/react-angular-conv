@@ -3,19 +3,27 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { login } from './slice.js';
 import { FaArrowUp } from 'react-icons/fa';
-
+import axios from 'axios';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    if (email.trim() && password.trim()) {
-      dispatch(login({ email, password }));
-      navigate('/*');
+  const handleLogin = async () => {
+ try{
+
+  const data= await  axios.post('http://localhost:3000/api/login', {email,password});
+  console.log(data);
+  if(data.data.status==='admin'){
+    navigate('/admin');
+  dispatch(login({ email, password }));
+  }else{navigate('/user'); dispatch(login({ email, password }));}
+
+ }catch(err){console.log(err)}
+  
     }
-  };
+  
 
   return (
     <div style={{
