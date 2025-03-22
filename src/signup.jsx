@@ -16,7 +16,7 @@ export default function SignUp() {
   const handleSignUp = async () => {
     try{
       const name=username;
-const data= await  axios.post('http://localhost:3000/api/register', {email,password,name});
+const data= await  axios.post('https://react-angular-backend-2.onrender.com/api/register', {email,password,name});
    console.log(data);
    navigate('/login');
   }catch(err){console.log(err)}}
