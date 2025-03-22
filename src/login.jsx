@@ -5,56 +5,55 @@ import { login } from './slice.js';
 import { FaArrowUp } from 'react-icons/fa';
 import axios from 'axios';
 import { ActivityIcon } from 'lucide-react';
-
+import { popup } from 'leaflet';
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const[loading,setLoading]=useState(false);
 
   function popup(message) {
     const div = document.createElement('div');
     div.innerText = message;
     div.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-    div.style.color = 'white';
-    div.style.padding = '20px';
-    div.style.position = 'fixed';
-    div.style.top = '50%';
-    div.style.left = '50%';
-    div.style.transform = 'translate(-50%, -50%)';
-    div.style.zIndex = '9999';
-    div.style.borderRadius = '12px';
-    div.style.fontSize = '16px';
-    div.style.textAlign = 'center';
-    div.style.maxWidth = '80%';
-    div.style.boxShadow = '0 8px 16px rgba(0,0,0,0.2)';
-
+  div.style.color = 'white';
+  div.style.padding = '20px';
+  div.style.position = 'fixed';
+  div.style.top = '50%';
+  div.style.left = '50%';
+  div.style.transform = 'translate(-50%, -50%)';
+  div.style.zIndex = '9999';
+  div.style.borderRadius = '12px';
+  div.style.fontSize = '16px';
+  div.style.textAlign = 'center';
+  div.style.maxWidth = '80%';
+  div.style.boxShadow = '0 8px 16px rgba(0,0,0,0.2)';
+  
     document.body.appendChild(div);
-
+  
     setTimeout(() => div.remove(), 3000);
   }
+  
 
   const handleLogin = async () => {
-    setLoading(true);
-    try {
-      const data = await axios.post('https://react-angular-backend-2.onrender.com/api/login', { email, password });
-      console.log(data, "ffff");
+ try{
 
-      if (data.data.status === 'admin') {
-        navigate('/admin');
-        dispatch(login({ email, password }));
-      } else if (data.data.status === 'user') {
-        navigate('/user');
-        dispatch(login({ email, password }));
-      }
-    } catch (err) {
-      console.log(err.response);
-      popup(err?.response?.data?.message || 'An error occurred or Invalid Credentials');
-    } finally {
-      setLoading(false);
+  const data= await  axios.post('https://react-angular-backend-2.onrender.com/api/login', {email,password});
+  console.log(data,"ffff");
+
+  
+  if(data.data.status==='admin'){
+    navigate('/admin');
+  dispatch(login({ email, password }));
+  }else if(data.data.status==='user'){navigate('/user'); dispatch(login({ email, password }));}
+
+ }catch(err){console.log(err.response),
+  popup(err?.response?.data?.message || 'An error occurred or Invalid Credentials');
+ }
+  
     }
-  }
+  
 
   return (
     <div style={{
@@ -120,21 +119,10 @@ export default function Login() {
             borderRadius: '8px',
             cursor: 'pointer',
             border: 'none',
-            fontSize: '16px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
+            fontSize: '16px'
           }}
-          disabled={loading}
         >
-          {loading ? (
-            <>
-              Logging in...
-              <ActivityIcon size={16} style={{ marginLeft: '8px' }} />
-            </>
-          ) : (
-            'Login'
-          )}
+        Login  {loading && <ActivityIcon size={16} style={{marginLeft:'8px'}}/> }
         </button>
         <p style={{
           marginTop: '16px',
@@ -145,4 +133,4 @@ export default function Login() {
       </div>
     </div>
   );
-}
+}    
