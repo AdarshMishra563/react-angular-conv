@@ -128,7 +128,7 @@ export default function Login() {
           marginTop: '16px',
           textAlign: 'center'
         }}>
-          Don't have an account? <a href="/signup" style={{ color: '#3b82f6', textDecoration: 'none' }}>Sign up</a>
+          Don't have an account? <Link to="/signup" style={{ color: '#3b82f6', textDecoration: 'none' }}>Sign up</Link>
         </p>
       </div>
     </div>
