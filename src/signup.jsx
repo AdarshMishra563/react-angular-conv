@@ -107,7 +107,7 @@ const data= await  axios.post('https://react-angular-backend-2.onrender.com/api/
           marginTop: '16px',
           textAlign: 'center'
         }}>
-          Already have an account? <a href="/login" style={{ color: '#3b82f6', textDecoration: 'none' }}>Login</a>
+ 
         </p>
       </div>
     </div>
