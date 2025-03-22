@@ -39,7 +39,7 @@ export default function Login() {
   const handleLogin = async () => {
  try{
 
-  const data= await  axios.post('http://localhost:3000/api/login', {email,password});
+  const data= await  axios.post('https://react-angular-backend-2.onrender.com/api/login', {email,password});
   console.log(data,"ffff");
 
   
