@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import { login } from './slice.js';
 import { FaArrowUp } from 'react-icons/fa';
 import axios from 'axios';
@@ -109,7 +109,7 @@ export default function Login() {
             borderRadius: '8px'
           }}
         />
-        <button
+    <button
           onClick={handleLogin}
           style={{
             width: '100%',
@@ -119,17 +119,28 @@ export default function Login() {
             borderRadius: '8px',
             cursor: 'pointer',
             border: 'none',
-            fontSize: '16px'
+            fontSize: '16px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
           }}
+          disabled={loading}
         >
-        Login  {loading && <ActivityIcon size={16} style={{marginLeft:'8px'}}/> }
+          {loading ? (
+            <>
+              Logging in...
+              <ActivityIcon size={16} style={{ marginLeft: '8px' }} />
+            </>
+          ) : (
+            'Login'
+          )}
         </button>
-        <p style={{
+ <div style={{
           marginTop: '16px',
           textAlign: 'center'
         }}>
-          Don't have an account? <a href="/signup" style={{ color: '#3b82f6', textDecoration: 'none' }}>Sign up</a>
-        </p>
+          Don't have an account? <Link to="/signup" style={{ color: '#3b82f6', textDecoration: 'none' }}>Sign up</Link>
+        </div>
       </div>
     </div>
   );
