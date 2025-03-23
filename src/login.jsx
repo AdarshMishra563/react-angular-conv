@@ -38,7 +38,7 @@ export default function Login() {
 
   const handleLogin = async () => {
  try{
-
+setLoading(true);
   const data= await  axios.post('https://react-angular-backend-2.onrender.com/api/login', {email,password});
   console.log(data,"ffff");
 
@@ -50,7 +50,7 @@ export default function Login() {
 
  }catch(err){console.log(err.response),
   popup(err?.response?.data?.message || 'An error occurred or Invalid Credentials');
- }
+ }finally{setLoading(false)}
   
     }
   
