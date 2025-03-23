@@ -2,7 +2,7 @@ import React from 'react'
 
 function Userpage() {
   return (
-    <div>user</div>
+    <div>user panel if admin login with admin credentials</div>
   )
 }
 
