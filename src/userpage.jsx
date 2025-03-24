@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { logout } from './slice.js'; // Assuming you have a logout action in your slice
+import { logout } from './slice.js'; 
 import { useNavigate } from 'react-router-dom';
 
 function Userpage() {
