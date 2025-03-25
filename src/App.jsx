@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import SignUp from './signup';
 import Services from './Services';
 import Userpage from './userpage';
+import Subservice from './Sub-service';
 
 
 
@@ -87,7 +88,9 @@ export default function App() {
         ><Route path="dashboard" element={<Home />} />
        <Route path="*" element={<Home />} />
         <Route path="" element={<Navigate to="dashboard" />} />
-          <Route path="service" element={<Services />} /></Route>
+          <Route path="service" element={<Services />} />
+          <Route path="subservice" element={<Subservice />} /></Route>
+          
         <Route
           path="/user"
           element={

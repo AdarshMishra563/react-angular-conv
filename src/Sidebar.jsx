@@ -17,7 +17,7 @@ const NavigationItems = [
     icon: <FaBox />,
     children: [
       { id: 'service-list', title: 'Service List', url: 'service' },
-      { id: 'sub_service-list', title: 'Sub Service List', url: 'sub-service' }
+      { id: 'sub_service-list', title: 'Sub Service List', url: 'subservice' }
     ]
   },
   {
