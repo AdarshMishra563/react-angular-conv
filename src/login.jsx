@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-<<<<<<< HEAD
+
 import { Link, useNavigate } from 'react-router-dom';
-=======
+
 import { useNavigate,Link } from 'react-router-dom';
->>>>>>> 5901703ef28f805c626aa1f58a94b274660c798e
+
 import { login } from './slice.js';
 import { FaArrowUp } from 'react-icons/fa';
 import axios from 'axios';
@@ -157,11 +157,11 @@ setLoading(true);
             'Login'
           )}
         </button>
-<<<<<<< HEAD
+
         <div style={{
 =======
  <div style={{
->>>>>>> 5901703ef28f805c626aa1f58a94b274660c798e
+
           marginTop: '16px',
           textAlign: 'center'
         }}>
