@@ -202,7 +202,7 @@ const api=async ()=>{
                     <td>${payment.amount}</td>
                     <td>{payment.service}</td>
                     <td>{payment.createdAt}</td>
-                    <td style={{ color: payment.Paymentstatus === 'Completed' ? 'green' : 'red' }}>{payment.status}</td>
+                    <td style={{ color: payment.Paymentstatus === 'succeeded' ? 'green' : 'red' }}>{payment.Paymentstatus}</td>
                   </tr>
                 ))}
               </tbody>
