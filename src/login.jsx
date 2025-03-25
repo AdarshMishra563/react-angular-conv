@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-<<<<<<< HEAD
 
-=======
-import { Link, useNavigate } from 'react-router-dom';
->>>>>>> a6c78bd3b46198beb02b7584d913d8dacfb5bab8
+
+
+
+
 
 import { useNavigate,Link } from 'react-router-dom';
 
@@ -163,12 +163,9 @@ setLoading(true);
         </button>
 
         <div style={{
-<<<<<<< HEAD
 
-=======
-=======
- <div style={{
->>>>>>> a6c78bd3b46198beb02b7584d913d8dacfb5bab8
+
+
 
           marginTop: '16px',
           textAlign: 'center'
