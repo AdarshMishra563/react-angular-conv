@@ -103,12 +103,12 @@ const data= await  axios.post('http://localhost:3000/api/register', {email,passw
         >
           Sign Up
         </button>
-        <p style={{
+        <div style={{
           marginTop: '16px',
           textAlign: 'center'
         }}>
           Already have an account? <Link to="/login" style={{ color: '#3b82f6', textDecoration: 'none' }}>Login</Link>
-        </p>
+        </div>
       </div>
     </div>
   );

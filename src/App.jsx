@@ -74,6 +74,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+      <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp/>} />
         <Route
@@ -84,8 +85,8 @@ export default function App() {
             </Protected>
           }
         ><Route path="dashboard" element={<Home />} />
-        <Route path="*" element={<Home/>} />
-        <Route path="" element={<Home/>} />
+       <Route path="*" element={<Home />} />
+        <Route path="" element={<Navigate to="dashboard" />} />
           <Route path="service" element={<Services />} /></Route>
         <Route
           path="/user"
@@ -95,6 +96,7 @@ export default function App() {
             </Protected>
           }
         />
+         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>
   );
