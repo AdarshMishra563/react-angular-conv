@@ -4,9 +4,6 @@ import { useDispatch } from 'react-redux';
 
 
 
-
-
-
 import { useNavigate,Link } from 'react-router-dom';
 
 import { login } from './slice.js';
@@ -163,10 +160,6 @@ setLoading(true);
         </button>
 
         <div style={{
-
-
-
-
           marginTop: '16px',
           textAlign: 'center'
         }}>

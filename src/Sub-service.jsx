@@ -2,19 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
-
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 const stripePromise = loadStripe("pk_test_51R6T6ZAuCKRIANndsN0ARAa6e3hjjD2ahPXCBTRlluHAvxjRhri0jziSnhV1MVkeKetXYzdoyijYpoIPjo1DPdKS00BZZrESLv");
 
-const CheckoutForm = ({ price, onClose, onSuccess }) => {
+const CheckoutForm = ({ price,service, onClose, onSuccess }) => {
   const stripe = useStripe();
   const elements = useElements();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
+const redux=useSelector(state=>state.auth.user)
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
+
       const response = await fetch('https://react-angular-backend-2.onrender.com/api/payment-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -30,11 +34,19 @@ const CheckoutForm = ({ price, onClose, onSuccess }) => {
           card: elements.getElement(CardElement),
         },
       });
-console.log(await result);
+
       if (result.error) {
         alert(result.error.message);
       } else {
+
+        const sendpayment=await axios.post("https://react-angular-backend-2.onrender.com/api/payment",{email:redux.email,amount:result?.paymentIntent?.amount,Paymentstatus:result?.paymentIntent?.status,service:service});
+        console.log(await sendpayment)
+
         alert('Payment Successful!');
+        navigate(0)
+
+
+
         onSuccess();
         onClose();
       }
@@ -48,7 +60,7 @@ console.log(await result);
 
   return (
     <form onSubmit={handleSubmit}>
-      <CardElement />
+      <CardElement  style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '8px' }} />
       <button type="submit" disabled={!stripe || loading}>
         {loading ? 'Processing...' : 'Pay $' + price}
       </button>
@@ -57,7 +69,7 @@ console.log(await result);
   );
 };
 
-const PaymentPopup = ({ price, onClose, onSuccess }) => (
+const PaymentPopup = ({ price,service, onClose, onSuccess }) => (
   <div style={{
     position: 'fixed',
     top: 0,
@@ -77,7 +89,7 @@ const PaymentPopup = ({ price, onClose, onSuccess }) => (
     }}>
       <h2>Complete Your Payment</h2>
       <Elements stripe={stripePromise}>
-        <CheckoutForm price={price} onClose={onClose} onSuccess={onSuccess} />
+        <CheckoutForm service={service} price={price} onClose={onClose} onSuccess={onSuccess} />
       </Elements>
     </div>
   </div>
@@ -86,6 +98,24 @@ const PaymentPopup = ({ price, onClose, onSuccess }) => (
 
 function Subservice() {
     const data = useSelector(state => state.auth.user);
+const [allpayments,setallpayments]=useState([]);
+const api=async ()=>{
+
+    const allpayment=await axios.get(`https://react-angular-backend-2.onrender.com/api/getpayment/${data.email}`)
+    return allpayment.data.users
+    }
+    useEffect(() => {
+        api().then((response) => {
+          if (Array.isArray(response)) {
+            const sortedPayments = response.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            setallpayments(sortedPayments);
+          } else {
+            setallpayments([]);
+          }
+        });
+      }, []);
+      
+
     const services = [
       { id: 1, name: 'Electricity', price: 100 },
       { id: 2, name: 'Plumber', price: 200 },
@@ -95,7 +125,7 @@ function Subservice() {
   
     const [selectedPrice, setSelectedPrice] = useState(null);
     const [completedPayments, setCompletedPayments] = useState([]);
-  
+  const [ser,setser]=useState(null);
    
     useEffect(() => {
       const history = JSON.parse(localStorage.getItem('payments')) || [];
@@ -141,14 +171,16 @@ function Subservice() {
                 border: 'none',
                 cursor: 'pointer',
                 marginLeft: '10px'
-              }} onClick={() => setSelectedPrice(service.price)}>
+              }} onClick={() => {setSelectedPrice(service.price);
+                setser(service.name);
+              }}>
                 ${service.price}
               </button>
             </div>
           ))}
         </div>
   
-        {selectedPrice && <PaymentPopup price={selectedPrice} onClose={() => setSelectedPrice(null)} onSuccess={handleSuccess} />}
+        {selectedPrice && <PaymentPopup service={ser} price={selectedPrice} onClose={() => setSelectedPrice(null)} onSuccess={handleSuccess} />}
   
         {completedPayments.length > 0 && (
           <div style={{ marginTop: '24px' }}>
@@ -164,13 +196,13 @@ function Subservice() {
                 </tr>
               </thead>
               <tbody>
-                {completedPayments.map((payment, index) => (
+                {allpayments?.map((payment, index) => (
                   <tr key={index}>
                     <td>{payment.email}</td>
-                    <td>${payment.price}</td>
+                    <td>${payment.amount}</td>
                     <td>{payment.service}</td>
-                    <td>{payment.time}</td>
-                    <td style={{ color: payment.status === 'Completed' ? 'green' : 'red' }}>{payment.status}</td>
+                    <td>{payment.createdAt}</td>
+                    <td style={{ color: payment.Paymentstatus === 'Completed' ? 'green' : 'red' }}>{payment.status}</td>
                   </tr>
                 ))}
               </tbody>
