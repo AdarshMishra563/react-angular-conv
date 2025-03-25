@@ -72,7 +72,7 @@ function Layout() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+     <BrowserRouter>
       <Routes>
       <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />

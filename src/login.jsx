@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+<<<<<<< HEAD
 import { Link, useNavigate } from 'react-router-dom';
+=======
+import { useNavigate,Link } from 'react-router-dom';
+>>>>>>> 5901703ef28f805c626aa1f58a94b274660c798e
 import { login } from './slice.js';
 import { FaArrowUp } from 'react-icons/fa';
 import axios from 'axios';
@@ -36,6 +40,7 @@ export default function Login() {
   }
 
   const handleLogin = async () => {
+
     setLoading(true);
     try {
       const data = await axios.post('https://react-angular-backend-2.onrender.com/api/login', { email, password });
@@ -53,6 +58,22 @@ export default function Login() {
       popup(err?.response?.data?.message || 'An error occurred or Invalid Credentials');
     } finally {
       setLoading(false);
+ try{
+setLoading(true);
+  const data= await  axios.post('https://react-angular-backend-2.onrender.com/api/login', {email,password});
+  console.log(data,"ffff");
+
+  
+  if(data.data.status==='admin'){
+    navigate('/admin');
+  dispatch(login({ email, password }));
+  }else if(data.data.status==='user'){navigate('/user'); dispatch(login({ email, password }));}
+
+ }catch(err){console.log(err.response),
+  popup(err?.response?.data?.message || 'An error occurred or Invalid Credentials');
+ }finally{setLoading(false)}
+  
+>>>>>>> 5901703ef28f805c626aa1f58a94b274660c798e
     }
   }
 
@@ -110,7 +131,7 @@ export default function Login() {
             borderRadius: '8px'
           }}
         />
-        <button
+    <button
           onClick={handleLogin}
           style={{
             width: '100%',
@@ -136,7 +157,11 @@ export default function Login() {
             'Login'
           )}
         </button>
+<<<<<<< HEAD
         <div style={{
+=======
+ <div style={{
+>>>>>>> 5901703ef28f805c626aa1f58a94b274660c798e
           marginTop: '16px',
           textAlign: 'center'
         }}>
@@ -145,4 +170,4 @@ export default function Login() {
       </div>
     </div>
   );
-}
+}    

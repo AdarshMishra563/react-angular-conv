@@ -16,7 +16,7 @@ export default function SignUp() {
   const handleSignUp = async () => {
     try{
       const name=username;
-const data= await  axios.post('http://localhost:3000/api/register', {email,password,name});
+const data= await  axios.post('https://react-angular-backend-2.onrender.com/api/register', {email,password,name});
    console.log(data);
    navigate('/login');
   }catch(err){console.log(err)}}
@@ -103,7 +103,11 @@ const data= await  axios.post('http://localhost:3000/api/register', {email,passw
         >
           Sign Up
         </button>
+<<<<<<< HEAD
         <div style={{
+=======
+       <div style={{
+>>>>>>> 5901703ef28f805c626aa1f58a94b274660c798e
           marginTop: '16px',
           textAlign: 'center'
         }}>
@@ -112,4 +116,4 @@ const data= await  axios.post('http://localhost:3000/api/register', {email,passw
       </div>
     </div>
   );
-}
+}   
