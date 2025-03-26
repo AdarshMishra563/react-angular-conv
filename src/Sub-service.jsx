@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 const stripePromise = loadStripe("pk_test_51R6T6ZAuCKRIANndsN0ARAa6e3hjjD2ahPXCBTRlluHAvxjRhri0jziSnhV1MVkeKetXYzdoyijYpoIPjo1DPdKS00BZZrESLv");
 
 const CheckoutForm = ({ price,service, onClose, onSuccess }) => {
@@ -12,7 +12,9 @@ const CheckoutForm = ({ price,service, onClose, onSuccess }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 const redux=useSelector(state=>state.auth.user)
-  
+  const neww = {
+    email:"am0070563@gmail.com"
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -22,28 +24,28 @@ const redux=useSelector(state=>state.auth.user)
       const response = await fetch('https://react-angular-backend-2.onrender.com/api/payment-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: price, currency: 'usd' }),
+        body: JSON.stringify({ amount: price, currency: 'usd',service:service,email:neww.email }),
       });
 
       if (!response.ok) throw new Error('Failed to create payment intent');
-      const { clientSecret } = await response.json();
+      const { clientSecret,invoiceUrl } = await response.json();
       
-      
+      console.log('Invoice URL:',await invoiceUrl);
       const result = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: elements.getElement(CardElement),
         },
       });
-
+console.log(await result)
       if (result.error) {
         alert(result.error.message);
       } else {
 
-        const sendpayment=await axios.post("https://react-angular-backend-2.onrender.com/api/payment",{email:redux.email,amount:result?.paymentIntent?.amount,Paymentstatus:result?.paymentIntent?.status,service:service});
+        const sendpayment=await axios.post("https://react-angular-backend-2.onrender.com/api/payment",{email:redux.email,amount:result?.paymentIntent?.amount,Paymentstatus:invoiceUrl,service:service});
         console.log(await sendpayment)
 
         alert('Payment Successful!');
-        navigate(0)
+        
 
 
 
@@ -102,6 +104,7 @@ const [allpayments,setallpayments]=useState([]);
 const api=async ()=>{
 
     const allpayment=await axios.get(`https://react-angular-backend-2.onrender.com/api/getpayment/${data.email}`)
+    console.log(await allpayment)
     return allpayment.data.users
     }
     useEffect(() => {
@@ -183,32 +186,56 @@ const api=async ()=>{
         {selectedPrice && <PaymentPopup service={ser} price={selectedPrice} onClose={() => setSelectedPrice(null)} onSuccess={handleSuccess} />}
   
         {completedPayments.length > 0 && (
-          <div style={{ marginTop: '24px' }}>
-            <h2>Payment History</h2>
-            <table border="1" style={{ width: '100%', marginTop: '12px', textAlign: 'left' }}>
-              <thead>
-                <tr>
-                  <th>Email</th>
-                  <th>Amount</th>
-                  <th>Service</th>
-                  <th>Time</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {allpayments?.map((payment, index) => (
-                  <tr key={index}>
-                    <td>{payment.email}</td>
-                    <td>${payment.amount}</td>
-                    <td>{payment.service}</td>
-                    <td>{payment.createdAt}</td>
-                    <td style={{ color: payment.Paymentstatus === 'succeeded' ? 'green' : 'red' }}>{payment.Paymentstatus}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+  <div style={{ marginTop: '24px' }}>
+    <h2>Payment History</h2>
+
+   
+    <div style={{
+      width: '100%',
+      overflowX: 'auto',
+      maxHeight: '400px',
+      border: '1px solid #ccc',
+      borderRadius: '8px'
+    }}>
+      
+      <div style={{ display: 'flex', backgroundColor: '#007bff', color: '#fff', padding: '12px 0' }}>
+        <div style={{ flex: 1, padding: '12px', fontWeight: 'bold' }}>Email</div>
+        <div style={{ flex: 1, padding: '12px', fontWeight: 'bold' }}>Amount</div>
+        <div style={{ flex: 1, padding: '12px', fontWeight: 'bold' }}>Service</div>
+        <div style={{ flex: 1, padding: '12px', fontWeight: 'bold' }}>Time</div>
+        <div style={{ flex: 1, padding: '12px', fontWeight: 'bold' }}>Status</div>
+      </div>
+
+     
+      {allpayments?.map((payment, index) => (
+        <div 
+          key={index} 
+          style={{ 
+            display: 'flex', 
+            backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#e6f7ff',
+            padding: '12px 0'
+          }}
+        >
+          <div style={{ flex: 1, padding: '12px' }}>{payment.email}</div>
+          <div style={{ flex: 1, padding: '12px' }}>${payment.amount}</div>
+          <div style={{ flex: 1, padding: '12px' }}>{payment.service}</div>
+          <div style={{ flex: 1, padding: '12px' }}>{payment.createdAt}</div>
+          <div  
+            style={{ 
+              flex: 1, 
+              padding: '1px',
+              color: payment.Paymentstatus === 'succeeded' ? 'green' : 'red' 
+            }}
+          >
+           <button onClick={()=>{window.open(`${payment.Paymentstatus}`, '_blank');
+}} style={{borderColor:"GrayText"}}> Downlaod Invoice</button>
           </div>
-        )}
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+
       </div>
     );
   }
