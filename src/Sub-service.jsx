@@ -46,7 +46,7 @@ console.log(await result)
 
         alert('Payment Successful!');
         
-
+navigate(0);
 
 
         onSuccess();
