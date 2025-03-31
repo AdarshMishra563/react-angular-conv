@@ -12,14 +12,15 @@ export default function SignUp() {
   const [username, setConfirmPassword] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading,setloding]=useState(false);
 
   const handleSignUp = async () => {
-    try{
+    try{setloding(true)
       const name=username;
 const data= await  axios.post('https://react-angular-backend-2.onrender.com/api/register', {email,password,name});
    console.log(data);
    navigate('/login');
-  }catch(err){console.log(err)}}
+  }catch(err){console.log(err)}finally{setloding(false)}}
 
   return (
     <div style={{
@@ -51,7 +52,7 @@ const data= await  axios.post('https://react-angular-backend-2.onrender.com/api/
         }}>Sign Up</h1>
         <input
           type="email"
-          placeholder="Enter your email"
+          placeholder="Enter an actual email to recieve invoice"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           style={{
@@ -101,7 +102,7 @@ const data= await  axios.post('https://react-angular-backend-2.onrender.com/api/
             fontSize: '16px'
           }}
         >
-          Sign Up
+          {loading?"signing up...":"Sign Up"}
         </button>
 
         <div style={{

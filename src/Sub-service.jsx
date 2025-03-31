@@ -24,7 +24,7 @@ const redux=useSelector(state=>state.auth.user)
       const response = await fetch('https://react-angular-backend-2.onrender.com/api/payment-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: price, currency: 'usd',service:service,email:neww.email }),
+        body: JSON.stringify({ amount: price, currency: 'usd',service:service,email:redux.email }),
       });
 
       if (!response.ok) throw new Error('Failed to create payment intent');
