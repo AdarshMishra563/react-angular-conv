@@ -217,7 +217,7 @@ const api=async ()=>{
           }}
         >
           <div style={{ flex: 1, padding: '12px' }}>{payment.email}</div>
-          <div style={{ flex: 1, padding: '12px' }}>${payment.amount}</div>
+          <div style={{ flex: 1, padding: '12px' }}>${payment.amount/100}</div>
           <div style={{ flex: 1, padding: '12px' }}>{payment.service}</div>
           <div style={{ flex: 1, padding: '12px' }}>{payment.createdAt}</div>
           <div  
