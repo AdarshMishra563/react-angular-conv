@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import WorldMapChart from './Map';
 import { FaTwitter } from 'react-icons/fa';
 import { FaFacebook, FaGoogle } from 'react-icons/fa';
-
+import Posts from './Posts'
 import { ProgressBar } from 'react-bootstrap';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, BarChart, Bar } from 'recharts';
 const latlong = {};
@@ -289,18 +289,16 @@ const Home = () => {
   ];
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-        
       {sales.map((sale, index) => (
-        <div key={index} style={{ flex: '1 1 calc(33.333% - 20px)', margin: '10px',marginTop:"50px" }}>
+        <div key={index} style={{ flex: '1 1 calc(33.333% - 20px)', margin: '10px', marginTop: '50px' }}>
           <div style={{ padding: '20px', backgroundColor: '#fff', borderRadius: '8px', boxShadow: '5px 5px 5px 5px rgba(0,0,0,0.05)' }}>
             <h6>{sale.title}</h6>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <h3 style={{ display: 'flex', alignItems: 'center' }}>
-              <i className={`fa fa ${sale.icon}`} style={{ fontSize: '30px', marginRight: '10px' }}></i>
+                <i className={`fa fa ${sale.icon}`} style={{ fontSize: '30px', marginRight: '10px' }}></i>
                 {sale.amount}
               </h3>
               <p>{sale.percentage}</p>
-              
             </div>
             <ProgressBar variant={sale.progress_bg} now={sale.progress} style={{ height: '7px', marginTop: '20px' }} />
           </div>
@@ -314,8 +312,6 @@ const Home = () => {
           <i className={item.icon} style={{ fontSize: '30px' }}></i>
         </div>
       ))}
-
-
       <div style={{ flex: '1 1 calc(50% - 20px)', margin: '10px' }}>
         <h5>Sales Overview</h5>
         <LineChart width={500} height={300} data={chartData}>
@@ -326,7 +322,6 @@ const Home = () => {
           <Line type="monotone" dataKey="sales" stroke="#8884d8" />
         </LineChart>
       </div>
-
       <div style={{ flex: '1 1 calc(50% - 20px)', margin: '10px' }}>
         <h5>Revenue Breakdown</h5>
         <BarChart width={500} height={300} data={chartData}>
@@ -350,12 +345,10 @@ const Home = () => {
           </div>
         ))}
       </div>
-
       {social_card.map((list, index) => (
         <div key={index} style={{ flex: '1 1 calc(33.333% - 20px)', margin: '10px', backgroundColor: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0,0,0,0.05)' }}>
           <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #f0f0f0', paddingBottom: '15px' }}>
-            <i className={list.icon} style={{ fontSize: '36px', marginRight: '15px' }}>{list.icon}
-            </i>
+            <i className={list.icon} style={{ fontSize: '36px', marginRight: '15px' }}>{list.icon}</i>
             <div>
               <h3>{list.amount}</h3>
               <h5 style={{ color: list.color }}>{list.percentage} <span style={{ color: '#999' }}>Total Likes</span></h5>
@@ -368,10 +361,9 @@ const Home = () => {
             <ProgressBar variant={list.progress_bg_2} now={list.progress2} style={{ height: '6px' }} />
           </div>
         </div>
-        
       ))}
+      <Posts  />
     </div>
-    
     
   );
 };
